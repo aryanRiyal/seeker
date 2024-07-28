@@ -3,7 +3,8 @@ import express from 'express';
 import {
     jobSeekerGetAllApplications,
     employerGetAllApplications,
-    jobSeekerDeleteApplication
+    jobSeekerDeleteApplication,
+    postApplication
 } from '../controllers/applicationController.js';
 import { isAuthenticated, isAuthorized } from '../middlewares/auth.js';
 
@@ -20,6 +21,7 @@ router.get(
     jobSeekerGetAllApplications
 );
 router.get('/employer/getAll', isAuthenticated, isAuthorized(Employer), employerGetAllApplications);
+router.post('/postApplication', isAuthenticated, isAuthorized(JobSeeker), postApplication);
 router.delete('/delete/:id', isAuthenticated, isAuthorized(JobSeeker), jobSeekerDeleteApplication);
 
 export default router;

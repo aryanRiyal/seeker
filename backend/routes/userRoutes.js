@@ -1,6 +1,6 @@
 import { LOGGER } from '../utils/logger.js';
 import express from 'express';
-import { register, login, logout } from '../controllers/userController.js';
+import { register, login, logout, getUser } from '../controllers/userController.js';
 import { isAuthenticated } from '../middlewares/auth.js';
 
 LOGGER.DEBUG('starting ./routes/userRoutes.js');
@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
 
 router.post('/register', register);
 router.post('/login', login);
+router.get('/getUser', isAuthenticated, getUser);
 router.get('/logout', isAuthenticated, logout);
 
 export default router;

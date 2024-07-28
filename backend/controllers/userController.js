@@ -24,12 +24,6 @@ export const register = catchAsyncError(async function (req, res, next) {
         role
     });
     sendToken(user, 201, res, 'User Registered!');
-    // LOGGER.DEBUG('User registered!');
-    // res.status(200).json({
-    //     success: true,
-    //     message: 'User registered!',
-    //     user
-    // });
 });
 LOGGER.DEBUG('exporting register');
 
@@ -42,13 +36,10 @@ export const login = catchAsyncError(async function (req, res, next) {
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
         return next(new ErrorHandler('Invalid Email or Password', 400));
-        // return next(new ErrorHandler('Invalid Email', 400));
     }
-    // LOGGER.INFO(`calling comparePassword(${password})`);
     const isPasswordMatched = await user.comparePassword(password);
     if (!isPasswordMatched) {
         return next(new ErrorHandler('Invalid Email or Password', 400));
-        // return next(new ErrorHandler('Invalid Password', 400));
     }
     if (user.role !== role) {
         return next(new ErrorHandler('User with this role not found!', 400));
@@ -57,7 +48,22 @@ export const login = catchAsyncError(async function (req, res, next) {
 });
 LOGGER.DEBUG('exporting login');
 
-export const logout = catchAsyncError(async (req, res, next) => {
+export const getUser = catchAsyncError(function (req, res, next) {
+    LOGGER.DEBUG('using - getUser()');
+    const user = req.user;
+    if (!user) {
+        return next(new ErrorHandler('User not found!', 404));
+    }
+    LOGGER.INFO('User found!');
+    res.status(200).json({
+        success: true,
+        message: 'User found!',
+        user
+    });
+});
+LOGGER.DEBUG('exporting getUser');
+
+export const logout = catchAsyncError(async function (req, res, next) {
     LOGGER.DEBUG('using - logout()');
     LOGGER.INFO('User logged out successfully!');
     res.status(200)
