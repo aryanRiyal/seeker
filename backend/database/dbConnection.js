@@ -49,7 +49,7 @@ export { connectDB, closeDB };
 LOGGER.DEBUG('exporting connectDB and closeDB');
 
 // const closeDB = function () {
-//         console.log('using - closeDB()');
+//     LOGGER.DEBUG('using - closeDB()');
 //     try {
 //         await mongoose.connection.close();
 //         console.log('MongoDB  connection closed!');

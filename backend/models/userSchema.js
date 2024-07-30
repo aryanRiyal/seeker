@@ -40,7 +40,6 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Hashing the Password
 userSchema.pre('save', async function (next) {
     LOGGER.DEBUG('using - bcrypt.hash()');
     if (!this.isModified('password')) {
@@ -49,14 +48,11 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
 });
 
-// Comparing Password
 userSchema.methods.comparePassword = async function (enteredPassword) {
     LOGGER.DEBUG('using - bcrypt.compare()');
-    // LOGGER.INFO(`using - bcrypt.compare(${enteredPassword}, ${this.password})`);
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Generating a JWT Token for Authorization
 userSchema.methods.getJWTToken = function () {
     LOGGER.DEBUG('using - getJWTToken()');
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {

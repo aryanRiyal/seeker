@@ -44,7 +44,6 @@ const customFormat = format.combine(
     format.timestamp({ format: 'YYYY-MM-DD hh:mm:ss' }),
     format.printf(({ timestamp, level, message }) => {
         // const upperCaseLevel = level.toUpperCase();
-        // const upperCaseLevel = level;
         return `${timestamp} [${level}]: ${message}`;
     })
 );
@@ -61,27 +60,3 @@ export const LOGGER = createLogger({
     ],
     exitOnError: false
 });
-
-// export const logger = createLogger({
-//     levels: {
-//         error: 0,
-//         warn: 1,
-//         notice: 2,
-//         info: 3,
-//         debug: 4
-//     },
-//     format: format.combine(
-//         format.timestamp({ format: 'YYYY-MM-DD hh:mm:ss' }),
-//         format.printf(
-//             ({ timestamp, level, message }) =>
-//                 `${timestamp} [${level.toLocaleUpperCase()}]: ${message}`
-//         )
-//     ),
-//     transports: [
-//         new transports.File({ filename: logFilePath, level: 'debug' }),
-//         new transports.Console({
-//             level: 'info'
-//         })
-//     ],
-//     exitOnError: false
-// });
