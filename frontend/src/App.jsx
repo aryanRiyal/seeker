@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import './App.css';
-import { Context } from './main.jsx';
+import { Context } from './main';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/Auth/Login.jsx';
-import Register from './components/Auth/Register.jsx';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import Home from './components/Home/Home';
@@ -23,7 +23,9 @@ const App = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get('', { withCredentials: true });
+                const response = await axios.get('http://localhost:4000/api/v1/user/getUser', {
+                    withCredentials: true
+                });
                 setUser(response.data.user);
                 setIsAuthorized(true);
             } catch (error) {
