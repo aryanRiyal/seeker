@@ -17,8 +17,8 @@ const Register = () => {
 
     const { isAuthorized, setIsAuthorized, user } = useContext(Context);
 
-    const handleRegister = async function (e) {
-        e.preventDefault();
+    const handleRegister = async function (element) {
+        element.preventDefault();
         try {
             const { data } = await axios.post(
                 'http://localhost:4000/api/v1/user/register',
@@ -47,7 +47,7 @@ const Register = () => {
             <div className='authPage'>
                 <div className='container'>
                     <div className='header'>
-                        <img src='/seeker_logo_white.png' alt='logo' />
+                        <img src='/seekerLogo.png' alt='logo' />
                         <h3>Create a new account</h3>
                     </div>
                     <form>

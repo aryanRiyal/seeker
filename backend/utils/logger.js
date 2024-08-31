@@ -2,6 +2,8 @@ import { createLogger, transports, format, addColors } from 'winston';
 import fs from 'fs';
 import path from 'path';
 
+const DEBUG_MODE = false;
+
 const logDir = path.resolve('logs');
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
@@ -18,7 +20,9 @@ const checkLogFile = () => {
     }
 };
 
-checkLogFile();
+if (DEBUG_MODE) {
+    checkLogFile();
+}
 
 const customLevels = {
     levels: {
@@ -48,15 +52,20 @@ const customFormat = format.combine(
     })
 );
 
+const customLoggerTransports = [
+    new transports.Console({
+        level: 'INFO',
+        format: format.combine(format.colorize({ all: true }), customFormat)
+    })
+];
+
+if (DEBUG_MODE) {
+    customLoggerTransports.push(new transports.File({ filename: logFilePath, level: 'DEBUG' }));
+}
+
 export const LOGGER = createLogger({
     levels: customLevels.levels,
     format: customFormat,
-    transports: [
-        new transports.File({ filename: logFilePath, level: 'DEBUG' }),
-        new transports.Console({
-            level: 'INFO',
-            format: format.combine(format.colorize({ all: true }), customFormat)
-        })
-    ],
+    transports: customLoggerTransports,
     exitOnError: false
 });

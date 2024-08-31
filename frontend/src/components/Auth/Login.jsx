@@ -42,7 +42,7 @@ const Login = () => {
             <div className='authPage'>
                 <div className='container'>
                     <div className='header'>
-                        <img src='/seeker_logo_white.png' alt='logo' />
+                        <img src='/seekerLogo.png' alt='logo' />
                         <h3>Login to your account</h3>
                     </div>
                     <form>

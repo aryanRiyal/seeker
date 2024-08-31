@@ -28,7 +28,7 @@ const Navbar = () => {
             <nav className={isAuthorized ? 'navbarShow' : 'navbarHide'}>
                 <div className='container'>
                     <div className='logo'>
-                        <img src='seeker_logo_white.png' alt='logo' />
+                        <img src='/seekerLogo.png' alt='logo' />
                     </div>
                     <ul className={show ? 'show-menu menu' : 'menu'}>
                         <li>
@@ -43,9 +43,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <Link to={'/application/me'} onClick={() => setShow(false)}>
-                                {user && user.role === 'Employer'
-                                    ? "APPLICANT'S APPLICATIONS"
-                                    : 'MY APPLICATIONS'}
+                                {user && user.role === 'Employer' ? "APPLICANT'S APPLICATIONS" : 'MY APPLICATIONS'}
                             </Link>
                         </li>
                         {user && user.role === 'Employer' ? (

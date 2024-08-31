@@ -15,6 +15,24 @@ export const getAllJobs = catchAsyncError(async function (req, res, next) {
 });
 LOGGER.DEBUG('exporting getAllJobs');
 
+export const getJobById = catchAsyncError(async function (req, res, next) {
+    LOGGER.DEBUG('using - getJobById()');
+    const { id } = req.params;
+    try {
+        const job = await Job.findById(id);
+        if (!job) {
+            return next(new ErrorHandler('Job not found', 404));
+        }
+        res.status(200).json({
+            success: true,
+            job
+        });
+    } catch (error) {
+        return next(new ErrorHandler('Invalid ID/ CastError', 400));
+    }
+});
+LOGGER.DEBUG('exporting getJobById');
+
 export const postJob = catchAsyncError(async function (req, res, next) {
     LOGGER.DEBUG('using - postJob()');
     const {
