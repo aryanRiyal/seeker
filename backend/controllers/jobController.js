@@ -35,36 +35,23 @@ LOGGER.DEBUG('exporting getJobById');
 
 export const postJob = catchAsyncError(async function (req, res, next) {
     LOGGER.DEBUG('using - postJob()');
-    const {
-        title,
-        description,
-        category,
-        country,
-        city,
-        location,
-        fixedSalary,
-        salaryFrom,
-        salaryTo
-    } = req.body;
-    if (!title || !description || !category || !country || !city || !location) {
+    const { title, company, description, category, country, city, location, fixedSalary, salaryFrom, salaryTo } =
+        req.body;
+    if (!title || !company || !description || !category || !country || !city || !location) {
         return next(new ErrorHandler('Please provide all the required job details!', 400));
     }
     if ((!salaryFrom || !salaryTo) && !fixedSalary) {
         return next(
-            new ErrorHandler(
-                'Please provide the Salary either in the fixed format or in the ranged format!',
-                400
-            )
+            new ErrorHandler('Please provide the Salary either in the fixed format or in the ranged format!', 400)
         );
     }
     if (!salaryFrom && !salaryTo && !fixedSalary) {
-        return next(
-            new ErrorHandler('Cannot provide the salary in both the fixed and ranged format!', 400)
-        );
+        return next(new ErrorHandler('Cannot provide the salary in both the fixed and ranged format!', 400));
     }
     const postedBy = req.user._id;
     const job = await Job.create({
         title,
+        company,
         description,
         category,
         country,

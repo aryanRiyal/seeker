@@ -13,21 +13,15 @@ export const postApplication = catchAsyncError(async function (req, res, next) {
         return next(new ErrorHandler('Resume file not Found!', 400));
     }
     const { resume } = req.files;
-    const allowedFormats = ['image/png', 'image/jpg', 'image/webp'];
+    const allowedFormats = ['image/png', 'image/jpeg', 'image/webp'];
     if (!allowedFormats.includes(resume.mimetype)) {
         return next(
-            new ErrorHandler(
-                'Invalid file type. Please upload your resume in a PNG, JPG or WEBP Format!',
-                400
-            )
+            new ErrorHandler('Invalid file type. Please upload your resume in a PNG, JPG or WEBP Format!', 400)
         );
     }
     const cloudinaryResponse = await cloudinary.uploader.upload(resume.tempFilePath);
     if (!cloudinaryResponse || cloudinaryResponse.error) {
-        cloudinary.error(
-            'Cloudinary Error:',
-            cloudinaryResponse.error || 'Unknown cloudinary Error'
-        );
+        cloudinary.error('Cloudinary Error:', cloudinaryResponse.error || 'Unknown cloudinary Error');
         return next(new ErrorHandler('Failed to upload Resume.', 500));
     }
     const { name, email, coverLetter, phone, address, jobID } = req.body;
@@ -46,16 +40,7 @@ export const postApplication = catchAsyncError(async function (req, res, next) {
         user: jobDetails.postedBy,
         role: 'Employer'
     };
-    if (
-        !name ||
-        !email ||
-        !coverLetter ||
-        !phone ||
-        !address ||
-        !applicantID ||
-        !employerID ||
-        !resume
-    ) {
+    if (!name || !email || !coverLetter || !phone || !address || !applicantID || !employerID || !resume) {
         return next(new ErrorHandler('Please provide all the required application details!', 400));
     }
     const application = await Application.create({
