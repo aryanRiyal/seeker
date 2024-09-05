@@ -14,8 +14,8 @@ const Login = () => {
 
     const { isAuthorized, setIsAuthorized, user } = useContext(Context);
 
-    const handleLogin = async function (e) {
-        e.preventDefault();
+    const handleLogin = async function (event) {
+        event.preventDefault();
         try {
             const { data } = await axios.post(
                 'http://localhost:4000/api/v1/user/login',

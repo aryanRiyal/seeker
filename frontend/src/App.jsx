@@ -21,7 +21,7 @@ const App = () => {
     const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchUser = async function () {
             try {
                 const response = await axios.get('http://localhost:4000/api/v1/user/getUser', {
                     withCredentials: true

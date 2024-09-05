@@ -14,12 +14,7 @@ const router = express.Router();
 const JobSeeker = 'Job Seeker';
 const Employer = 'Employer';
 
-router.get(
-    '/jobSeeker/getAll',
-    isAuthenticated,
-    isAuthorized(JobSeeker),
-    jobSeekerGetAllApplications
-);
+router.get('/jobSeeker/getAll', isAuthenticated, isAuthorized(JobSeeker), jobSeekerGetAllApplications);
 router.get('/employer/getAll', isAuthenticated, isAuthorized(Employer), employerGetAllApplications);
 router.post('/postApplication', isAuthenticated, isAuthorized(JobSeeker), postApplication);
 router.delete('/delete/:id', isAuthenticated, isAuthorized(JobSeeker), jobSeekerDeleteApplication);

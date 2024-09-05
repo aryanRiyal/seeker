@@ -17,8 +17,8 @@ const Register = () => {
 
     const { isAuthorized, setIsAuthorized, user } = useContext(Context);
 
-    const handleRegister = async function (element) {
-        element.preventDefault();
+    const handleRegister = async function (event) {
+        event.preventDefault();
         try {
             const { data } = await axios.post(
                 'http://localhost:4000/api/v1/user/register',

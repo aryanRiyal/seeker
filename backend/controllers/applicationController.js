@@ -24,14 +24,12 @@ export const postApplication = catchAsyncError(async function (req, res, next) {
         cloudinary.error('Cloudinary Error:', cloudinaryResponse.error || 'Unknown cloudinary Error');
         return next(new ErrorHandler('Failed to upload Resume.', 500));
     }
-    const { name, email, coverLetter, phone, address, jobID } = req.body;
+    const { name, email, coverLetter, phone, address, job_id } = req.body;
     const applicantID = {
         user: req.user._id,
         role: 'Job Seeker'
     };
-    if (!jobID) {
-        return next(new ErrorHandler('Job not found!', 404));
-    }
+    const jobID = job_id;
     const jobDetails = await Job.findById(jobID);
     if (!jobDetails) {
         return next(new ErrorHandler('Job not found!', 404));
@@ -40,7 +38,7 @@ export const postApplication = catchAsyncError(async function (req, res, next) {
         user: jobDetails.postedBy,
         role: 'Employer'
     };
-    if (!name || !email || !coverLetter || !phone || !address || !applicantID || !employerID || !resume) {
+    if (!name || !email || !coverLetter || !phone || !address || !applicantID || !employerID || !jobID || !resume) {
         return next(new ErrorHandler('Please provide all the required application details!', 400));
     }
     const application = await Application.create({
@@ -51,6 +49,7 @@ export const postApplication = catchAsyncError(async function (req, res, next) {
         address,
         applicantID,
         employerID,
+        jobID,
         resume: {
             public_id: cloudinaryResponse.public_id,
             url: cloudinaryResponse.secure_url

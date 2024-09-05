@@ -54,7 +54,7 @@ export const getUser = catchAsyncError(function (req, res, next) {
     if (!user) {
         return next(new ErrorHandler('User not found!', 404));
     }
-    LOGGER.INFO('User found!');
+    LOGGER.DEBUG('User found!');
     res.status(200).json({
         success: true,
         message: 'User found!',

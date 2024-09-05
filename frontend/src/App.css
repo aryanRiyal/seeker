@@ -610,7 +610,7 @@ p {
     background: #fff;
     text-decoration: none;
     width: 320px;
-    height: 220px;
+    height: 250px;
     padding: 20px 20px;
     display: flex;
     flex-direction: column;
@@ -1349,4 +1349,23 @@ nav .hamburger {
     .resume-modal {
         z-index: 11;
     }
+}
+
+.green-btn {
+    padding: 8px 16px;
+    text-align: center;
+    border: none;
+    margin-top: 15px;
+    margin-left: 8px;
+    font-weight: 700;
+    color: #fff;
+    background-color: #2d5649;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.green-btn:hover {
+    background-color: #3d715a;
 }

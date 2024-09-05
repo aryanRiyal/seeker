@@ -58,6 +58,11 @@ const applicationSchema = new mongoose.Schema({
             enum: ['Employer'],
             required: true
         }
+    },
+    jobID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job',
+        required: true
     }
 });
 
